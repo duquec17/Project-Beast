@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqqecwwiulr4h"]
+[gd_scene load_steps=4 format=3 uid="uid://dpjstncel7t2h"]
+
+[ext_resource type="Script" path="res://scenes/world_select/world_icon.gd" id="1_3tduq"]
 
 [sub_resource type="Gradient" id="Gradient_ixgh1"]
 offsets = PackedFloat32Array(0)
@@ -8,23 +10,15 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_ixgh1")
 width = 64
 
-[node name="World Select" type="Control"]
+[node name="World Icon" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Control" type="Control" parent="."]
 anchors_preset = 0
-offset_left = 64.0
-offset_top = 128.0
-offset_right = 128.0
-offset_bottom = 192.0
+offset_right = 64.0
+offset_bottom = 64.0
 pivot_offset = Vector2(32, 32)
+script = ExtResource("1_3tduq")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_top = -24.0
 offset_right = 40.0
@@ -33,7 +27,7 @@ scale = Vector2(1.08, 1)
 text = "World 1"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
