@@ -4,6 +4,9 @@ extends CharacterBody2D
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
+@export var weapons: Array[Node]
+var selectedWeapon = 0
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 981
 
@@ -14,13 +17,18 @@ var shotCooldown = 0
 #Editable Values
 var maxAmmo = 2
 var shotPower = 400
-var singleShot = true
-var shotDelay = .25
 var airControl = false
 var roundRotation = false
 
-func _physics_process(delta):
 
+
+func _physics_process(delta):
+	
+	if Input.is_action_just_pressed("jump"):
+		findWeapons()
+		
+	
+	
 	if shotCooldown > 0: shotCooldown -= delta
 	# Add the gravity.
 	if not is_on_floor():
@@ -42,20 +50,18 @@ func _physics_process(delta):
 			velocity.x = direction * SPEED / 4
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	if singleShot:
-		if Input.is_action_just_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
-			ammo -= 1
-			#shoot()
-			shotCooldown = shotDelay
-	else:
-		if Input.is_action_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
-			ammo -= 1
-			shoot()
-			shotCooldown = shotDelay
-
+	if Input.is_action_just_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
+		if weapons[selectedWeapon] != null:
+			weapons[selectedWeapon].shoot()
+			
+	ammo = weapons[selectedWeapon].ammo
 	move_and_slide()
-	print(ammo)
+	#print(ammo)
 	ammoDisp.size.x = 128 * ammo
+
+func findWeapons():
+	weapons = $"Weapon Storage".get_children()
+	print(weapons)
 
 func shoot(): #Shot Impulse Direction
 	velocity.x = sin(aim.rotation) * shotPower
@@ -64,4 +70,5 @@ func shoot(): #Shot Impulse Direction
 
 func _on_reload_collider_area_entered(area): #Reload
 	ammo = maxAmmo
+	weapons[selectedWeapon].ammo = weapons[selectedWeapon].maxAmmo
 	area.queue_free()

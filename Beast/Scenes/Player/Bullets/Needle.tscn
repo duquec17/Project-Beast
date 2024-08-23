@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm4j7x7yp08d0"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Bullets/BasicBullet.gd" id="1_831o0"]
+[ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="1_tet0m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogest"]
+size = Vector2(20, 2)
+
+[node name="Needle" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_831o0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ogest")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15625, 0.015625)
+texture = ExtResource("1_tet0m")
+
+[node name="detectFloor" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectFloor"]
+shape = SubResource("RectangleShape2D_ogest")
+
+[node name="hitEnemy" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitEnemy"]
+shape = SubResource("RectangleShape2D_ogest")
+
+[connection signal="area_entered" from="detectFloor" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="detectFloor" to="." method="_on_detect_floor_body_entered"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://cbk6tawsjnfwp"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Player_Body_New.gd" id="1_lxv4c"]
+[ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="2_765rh"]
+[ext_resource type="Script" path="res://Scripts/Player/Camera2D.gd" id="2_ucdb3"]
+[ext_resource type="Script" path="res://Scripts/Player/Mouse_Aim.gd" id="3_i5i8m"]
+[ext_resource type="Script" path="res://Scripts/Player/Weapon Storage.gd" id="3_lf0bp"]
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/Porkupine.gd" id="4_dhk2t"]
+[ext_resource type="PackedScene" uid="uid://bm4j7x7yp08d0" path="res://Scenes/Player/Bullets/Needle.tscn" id="5_esarg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dojip"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0ypq"]
+size = Vector2(32, 32)
+
+[node name="Player" type="Node2D"]
+
+[node name="Player_Body" type="CharacterBody2D" parent="." node_paths=PackedStringArray("weapons", "aim", "ammoDisp")]
+collision_layer = 2
+script = ExtResource("1_lxv4c")
+weapons = [NodePath("Weapon Storage/Porkupine")]
+aim = NodePath("Mouse_Aim")
+ammoDisp = NodePath("../Camera2D/TextureRect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body"]
+shape = SubResource("RectangleShape2D_dojip")
+
+[node name="Icon" type="Sprite2D" parent="Player_Body"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_765rh")
+
+[node name="Weapon Storage" type="Node2D" parent="Player_Body" node_paths=PackedStringArray("player", "aim")]
+script = ExtResource("3_lf0bp")
+player = NodePath("..")
+aim = NodePath("../Mouse_Aim")
+
+[node name="Porkupine" type="Node2D" parent="Player_Body/Weapon Storage"]
+script = ExtResource("4_dhk2t")
+bullet = ExtResource("5_esarg")
+
+[node name="Mouse_Aim" type="Node2D" parent="Player_Body"]
+script = ExtResource("3_i5i8m")
+
+[node name="Icon" type="Sprite2D" parent="Player_Body/Mouse_Aim"]
+z_index = 5
+position = Vector2(0, 26)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_765rh")
+
+[node name="Reload_Collider" type="Area2D" parent="Player_Body"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body/Reload_Collider"]
+shape = SubResource("RectangleShape2D_e0ypq")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+zoom = Vector2(2, 2)
+script = ExtResource("2_ucdb3")
+target = NodePath("../Player_Body")
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D"]
+z_index = 10
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -283.0
+offset_top = 132.0
+offset_right = -26.0
+offset_bottom = 260.0
+grow_vertical = 0
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("2_765rh")
+expand_mode = 1
+stretch_mode = 1
+
+[connection signal="area_entered" from="Player_Body/Reload_Collider" to="Player_Body" method="_on_reload_collider_area_entered"]

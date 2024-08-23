@@ -44,7 +44,7 @@ func _on_shot_power_scrolling():
 
 func _on_shot_delay_scrolling():
 	$Icon/ShotDelay/Label2.text = str($Icon/ShotDelay.value)
-	player.shotDelay = $Icon/ShotDelay.value
+	player.shotDelay = $Icon/ShtDelay.value
 
 
 func _on_air_control_toggled(button_pressed):
