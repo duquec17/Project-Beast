@@ -18,7 +18,6 @@ offset_left = 128.0
 offset_top = 384.0
 offset_right = 192.0
 offset_bottom = 448.0
-next_scene_path = ""
 next_level_right = NodePath("../2")
 
 [node name="2" parent="." node_paths=PackedStringArray("next_level_left", "next_level_right") instance=ExtResource("2_ppicr")]
@@ -27,7 +26,6 @@ offset_top = 264.0
 offset_right = 320.0
 offset_bottom = 328.0
 level_name = "2"
-next_scene_path = ""
 next_level_left = NodePath("../1")
 next_level_right = NodePath("../3")
 
@@ -37,7 +35,6 @@ offset_top = 384.0
 offset_right = 448.0
 offset_bottom = 448.0
 level_name = "3"
-next_scene_path = ""
 next_level_down = NodePath("../1")
 next_level_left = NodePath("../2")
 next_level_right = NodePath("../4")
@@ -48,7 +45,6 @@ offset_top = 320.0
 offset_right = 640.0
 offset_bottom = 384.0
 level_name = "4"
-next_scene_path = ""
 next_level_down = NodePath("../1")
 next_level_left = NodePath("../3")
 
