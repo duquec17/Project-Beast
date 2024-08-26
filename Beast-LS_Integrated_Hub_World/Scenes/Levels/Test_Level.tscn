@@ -78,7 +78,7 @@ position = Vector2(1516, -428)
 position = Vector2(1678, -522)
 
 [node name="Player2" parent="." instance=ExtResource("2_o84km")]
-position = Vector2(83.2569, -15.0852)
+position = Vector2(83, -33)
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_idcin")
@@ -92,7 +92,7 @@ remote_path = NodePath("../../AnimatableBody2D")
 update_rotation = false
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="Path2D"]
-position = Vector2(329, 212.34)
+position = Vector2(329, 12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_big7y")
