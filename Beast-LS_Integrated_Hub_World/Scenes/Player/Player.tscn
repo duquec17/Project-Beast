@@ -1,0 +1,196 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1u5i1ouoqwe"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Player_Body.gd" id="1_2gpqr"]
+[ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="2_765rh"]
+[ext_resource type="Script" path="res://Scripts/Player/Camera2D.gd" id="2_ucdb3"]
+[ext_resource type="Script" path="res://Scripts/Player/Mouse_Aim.gd" id="3_i5i8m"]
+[ext_resource type="Script" path="res://Scripts/Debug Screen.gd" id="5_li68o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dojip"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0ypq"]
+size = Vector2(32, 32)
+
+[node name="Player" type="Node2D"]
+
+[node name="Player_Body" type="CharacterBody2D" parent="."]
+collision_layer = 2
+script = ExtResource("1_2gpqr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body"]
+shape = SubResource("RectangleShape2D_dojip")
+
+[node name="Icon" type="Sprite2D" parent="Player_Body"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_765rh")
+
+[node name="Mouse_Aim" type="Node2D" parent="Player_Body"]
+script = ExtResource("3_i5i8m")
+
+[node name="Icon" type="Sprite2D" parent="Player_Body/Mouse_Aim"]
+z_index = 5
+position = Vector2(0, 26)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_765rh")
+
+[node name="Reload_Collider" type="Area2D" parent="Player_Body"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body/Reload_Collider"]
+shape = SubResource("RectangleShape2D_e0ypq")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+zoom = Vector2(2, 2)
+script = ExtResource("2_ucdb3")
+target = NodePath("../Player_Body")
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D"]
+z_index = 10
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -283.0
+offset_top = 132.0
+offset_right = -26.0
+offset_bottom = 260.0
+grow_vertical = 0
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("2_765rh")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Debug Screen" type="Control" parent="Camera2D" node_paths=PackedStringArray("player")]
+process_mode = 3
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_li68o")
+player = NodePath("../../Player_Body")
+
+[node name="Label" type="Label" parent="Camera2D/Debug Screen"]
+z_index = 6
+layout_mode = 0
+offset_left = -286.0
+offset_top = -164.0
+offset_right = -57.0
+offset_bottom = -138.0
+text = "Press G for Settings"
+
+[node name="Icon" type="Node2D" parent="Camera2D/Debug Screen"]
+visible = false
+
+[node name="Icon" type="Sprite2D" parent="Camera2D/Debug Screen/Icon"]
+modulate = Color(1, 1, 1, 0.2)
+position = Vector2(-1, 5)
+scale = Vector2(2.29688, 2.29688)
+texture = ExtResource("2_765rh")
+
+[node name="Rapid Fire" type="CheckButton" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -121.0
+offset_top = -108.0
+offset_right = 54.0
+offset_bottom = -77.0
+text = "Rapid Fire"
+
+[node name="Rounding" type="CheckButton" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -121.0
+offset_top = -131.0
+offset_right = 54.0
+offset_bottom = -100.0
+text = "360 / 8 Direction"
+
+[node name="HScrollBar" type="HScrollBar" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -20.0
+offset_top = -71.0
+offset_right = 95.0
+offset_bottom = -63.0
+step = 1.0
+value = 2.0
+
+[node name="Label" type="Label" parent="Camera2D/Debug Screen/Icon/HScrollBar"]
+layout_mode = 0
+offset_left = -95.0
+offset_top = -9.0
+offset_right = -7.0
+offset_bottom = 17.0
+text = "Max Ammo"
+
+[node name="Label2" type="Label" parent="Camera2D/Debug Screen/Icon/HScrollBar"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -8.0
+offset_right = 156.0
+offset_bottom = 18.0
+text = "1"
+
+[node name="ShotPower" type="HScrollBar" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -20.0
+offset_top = -53.0
+offset_right = 95.0
+offset_bottom = -45.0
+min_value = 50.0
+max_value = 1000.0
+step = 1.0
+value = 400.0
+
+[node name="Label" type="Label" parent="Camera2D/Debug Screen/Icon/ShotPower"]
+layout_mode = 0
+offset_left = -95.0
+offset_top = -9.0
+offset_right = -7.0
+offset_bottom = 17.0
+text = "Shot Power"
+
+[node name="Label2" type="Label" parent="Camera2D/Debug Screen/Icon/ShotPower"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -8.0
+offset_right = 156.0
+offset_bottom = 18.0
+text = "1"
+
+[node name="ShotDelay" type="HScrollBar" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -20.0
+offset_top = -35.0
+offset_right = 95.0
+offset_bottom = -27.0
+max_value = 2.0
+step = 0.05
+value = 0.25
+
+[node name="Label" type="Label" parent="Camera2D/Debug Screen/Icon/ShotDelay"]
+layout_mode = 0
+offset_left = -122.0
+offset_top = -9.0
+offset_right = -5.0
+offset_bottom = 17.0
+text = "Shot Cooldown"
+
+[node name="Label2" type="Label" parent="Camera2D/Debug Screen/Icon/ShotDelay"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -8.0
+offset_right = 156.0
+offset_bottom = 18.0
+text = "1"
+
+[node name="AirControl" type="CheckButton" parent="Camera2D/Debug Screen/Icon"]
+offset_left = -121.0
+offset_top = -29.0
+offset_right = 54.0
+offset_bottom = 2.0
+text = "Air Control"
+
+[connection signal="area_entered" from="Player_Body/Reload_Collider" to="Player_Body" method="_on_reload_collider_area_entered"]
+[connection signal="toggled" from="Camera2D/Debug Screen/Icon/Rapid Fire" to="Camera2D/Debug Screen" method="_on_rapid_fire_toggled"]
+[connection signal="toggled" from="Camera2D/Debug Screen/Icon/Rounding" to="Camera2D/Debug Screen" method="_on_rounding_toggled"]
+[connection signal="scrolling" from="Camera2D/Debug Screen/Icon/HScrollBar" to="Camera2D/Debug Screen" method="_on_h_scroll_bar_scrolling"]
+[connection signal="scrolling" from="Camera2D/Debug Screen/Icon/ShotPower" to="Camera2D/Debug Screen" method="_on_shot_power_scrolling"]
+[connection signal="scrolling" from="Camera2D/Debug Screen/Icon/ShotDelay" to="Camera2D/Debug Screen" method="_on_shot_delay_scrolling"]
+[connection signal="toggled" from="Camera2D/Debug Screen/Icon/AirControl" to="Camera2D/Debug Screen" method="_on_air_control_toggled"]
