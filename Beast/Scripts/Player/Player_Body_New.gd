@@ -26,8 +26,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("jump"):
 		findWeapons()
-		
 	
+	if Input.is_action_just_pressed("Debug"):
+		switchWeapon(selectedWeapon + 1)
 	
 	if shotCooldown > 0: shotCooldown -= delta
 	# Add the gravity.
@@ -50,9 +51,14 @@ func _physics_process(delta):
 			velocity.x = direction * SPEED / 4
 	elif is_on_floor():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	if Input.is_action_just_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
-		if weapons[selectedWeapon] != null:
-			weapons[selectedWeapon].shoot()
+	if weapons[selectedWeapon].auto:
+		if Input.is_action_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
+			if weapons[selectedWeapon] != null:
+				weapons[selectedWeapon].shoot()
+	else:
+		if Input.is_action_just_pressed("shoot") and ammo > 0 and shotCooldown <= 0:
+			if weapons[selectedWeapon] != null:
+				weapons[selectedWeapon].shoot()
 			
 	ammo = weapons[selectedWeapon].ammo
 	move_and_slide()
@@ -62,6 +68,11 @@ func _physics_process(delta):
 func findWeapons():
 	weapons = $"Weapon Storage".get_children()
 	print(weapons)
+
+func switchWeapon(num):
+	while num >= len(weapons):
+		num -= len(weapons)
+	selectedWeapon = num
 
 func shoot(): #Shot Impulse Direction
 	velocity.x = sin(aim.rotation) * shotPower
