@@ -14,7 +14,7 @@ var shotPower = 200
 var shotDelay = .01
 
 var projSpeed = 300
-var projLife = 1
+var projLife = .5
 
 var rng = RandomNumberGenerator.new()
 
@@ -37,7 +37,7 @@ func shoot():
 		ammo -= 1
 		shotCooldown = shotDelay
 		
-		var angle = aim.rotation - deg_to_rad(20) + deg_to_rad(randf_range(-4, 4) + 20)
+		var angle = aim.rotation - deg_to_rad(20) + deg_to_rad(randf_range(-10, 10) + 20)
 		var b = bullet.instantiate()
 		player.get_parent().add_child(b)
 		b.position = player.position
