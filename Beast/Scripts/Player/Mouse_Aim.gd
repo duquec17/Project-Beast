@@ -14,4 +14,3 @@ func _process(delta):
 	else:
 		rotation = tempRot
 	rotation -= deg_to_rad(90)
-
