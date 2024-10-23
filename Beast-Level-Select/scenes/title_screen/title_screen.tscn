@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://tu7ygy66prxy"]
+
+[ext_resource type="Script" path="res://scenes/title_screen/title_screen.gd" id="1_pve0r"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pve0r")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Any Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press Any Button"
+
+[node name="New Game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="Load Game" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="Config" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Config"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Any Button" to="." method="_on_any_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Config" to="." method="_on_config_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
