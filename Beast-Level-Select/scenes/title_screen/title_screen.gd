@@ -6,7 +6,7 @@ func _on_any_button_pressed():
 
 ## Searches for a empty game save to start writing new content into
 func _on_new_game_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://scenes/world_select/world_select.tscn")
 
 ## Opens menu for all game saves
 func _on_load_game_pressed():
