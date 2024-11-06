@@ -23,4 +23,3 @@ func _input(event):
 			get_tree().get_root().add_child(worlds[current_world].level_select_scene)
 			get_tree().current_scene = worlds[current_world].level_select_scene
 			get_tree().get_root().remove_child(self)
-

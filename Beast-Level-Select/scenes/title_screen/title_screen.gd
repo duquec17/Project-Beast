@@ -19,4 +19,3 @@ func _on_config_pressed():
 ## On press exit button
 func _on_exit_pressed():
 	get_tree().quit()
-
