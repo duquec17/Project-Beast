@@ -16,7 +16,7 @@ var maxAmmo = 2
 var shotPower = 400
 var singleShot = true
 var shotDelay = .25
-var airControl = false
+var airControl = true
 var roundRotation = false
 
 func _physics_process(delta):
