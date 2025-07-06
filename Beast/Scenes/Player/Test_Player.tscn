@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbk6tawsjnfwp"]
+[gd_scene load_steps=14 format=3 uid="uid://cbk6tawsjnfwp"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player_Body_New.gd" id="1_lxv4c"]
 [ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="2_765rh"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bm4j7x7yp08d0" path="res://Scenes/Player/Bullets/Needle.tscn" id="5_esarg"]
 [ext_resource type="Script" path="res://Scripts/Player/Weapons/Salamader.gd" id="6_rmc62"]
 [ext_resource type="PackedScene" uid="uid://egua32kt6vib" path="res://Scenes/Player/Bullets/Flame.tscn" id="7_3a6n6"]
+[ext_resource type="Script" path="res://Scripts/Player/Weapons/Camera2D.gd" id="8_kgnyq"]
+[ext_resource type="PackedScene" uid="uid://wssipiljqrmj" path="res://Scenes/Player/Bullets/WebPlatform.tscn" id="9_pqvxg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dojip"]
 size = Vector2(32, 32)
@@ -18,12 +20,12 @@ size = Vector2(32, 32)
 
 [node name="Player" type="Node2D"]
 
-[node name="Player_Body" type="CharacterBody2D" parent="." node_paths=PackedStringArray("weapons", "aim", "ammoDisp")]
+[node name="Player_Body" type="CharacterBody2D" parent="." node_paths=PackedStringArray("aim", "bulletDisp", "percentDisp")]
 collision_layer = 2
 script = ExtResource("1_lxv4c")
-weapons = [NodePath("Weapon Storage/Porkupine"), NodePath("Weapon Storage/Salamader")]
 aim = NodePath("Mouse_Aim")
-ammoDisp = NodePath("../Camera2D/TextureRect")
+bulletDisp = NodePath("../CanvasLayer/TextureRect")
+percentDisp = NodePath("../CanvasLayer/ProgressBar")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body"]
 shape = SubResource("RectangleShape2D_dojip")
@@ -40,10 +42,18 @@ aim = NodePath("../Mouse_Aim")
 [node name="Porkupine" type="Node2D" parent="Player_Body/Weapon Storage"]
 script = ExtResource("4_dhk2t")
 bullet = ExtResource("5_esarg")
+description = "Porkupine / Shotgun"
 
 [node name="Salamader" type="Node2D" parent="Player_Body/Weapon Storage"]
 script = ExtResource("6_rmc62")
 bullet = ExtResource("7_3a6n6")
+description = "Salamander / Flamethrower"
+ammoType = 1
+
+[node name="Spider" type="Node2D" parent="Player_Body/Weapon Storage"]
+script = ExtResource("8_kgnyq")
+bullet = ExtResource("9_pqvxg")
+description = "Spider / Platform Launcher"
 
 [node name="Mouse_Aim" type="Node2D" parent="Player_Body"]
 script = ExtResource("3_i5i8m")
@@ -66,21 +76,77 @@ zoom = Vector2(2, 2)
 script = ExtResource("2_ucdb3")
 target = NodePath("../Player_Body")
 
-[node name="TextureRect" type="TextureRect" parent="Camera2D"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = -1014.0
+offset_top = -2.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 30
+text = "asdmhbasjdbashdjhasgdjhaasdasd"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 z_index = 10
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -283.0
-offset_top = 132.0
-offset_right = -26.0
-offset_bottom = 260.0
+offset_top = -64.0
+offset_right = 257.0
+offset_bottom = 64.0
 grow_vertical = 0
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.5, 0.5)
 size_flags_horizontal = 8
 size_flags_vertical = 8
 texture = ExtResource("2_765rh")
 expand_mode = 1
 stretch_mode = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_right = 365.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+max_value = 1.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -244.0
+offset_top = 5.0
+offset_right = -4.0
+offset_bottom = 245.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(240, 240)
+render_target_update_mode = 4
+
+[node name="Camera2D2" type="Camera2D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.2, 0.2)
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/SubViewportContainer"]
+points = PackedVector2Array(-5, 245, 245, 245, 245, -5, -5, -5)
+closed = true
 
 [connection signal="area_entered" from="Player_Body/Reload_Collider" to="Player_Body" method="_on_reload_collider_area_entered"]

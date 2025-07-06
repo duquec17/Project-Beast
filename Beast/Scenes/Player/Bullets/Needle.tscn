@@ -20,6 +20,7 @@ texture = ExtResource("1_tet0m")
 
 [node name="detectFloor" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectFloor"]
 shape = SubResource("RectangleShape2D_ogest")

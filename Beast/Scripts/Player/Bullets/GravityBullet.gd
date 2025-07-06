@@ -3,6 +3,8 @@ extends RigidBody2D
 @export var damage = 1
 @export var speed = 1
 @export var lifeTime = 5
+@export var maxLifeTime = 5
+@export var sizeRamp: Gradient
 var angle = 0
 
 var adjustedSpeed = false
@@ -20,9 +22,11 @@ func _process(delta):
 		adjustedSpeed = true
 	$Sprite2D.rotation = get_angle_to(Vector2(position.x + linear_velocity.x, position.y + linear_velocity.y))
 	lifeTime -= delta
+	var currentGradient = sizeRamp.sample((maxLifeTime - lifeTime) / maxLifeTime).r
+	scale = Vector2(currentGradient, currentGradient)
 	if lifeTime <= 0:
 		queue_free()
-	
+	move_and_collide(linear_velocity)
 	
 
 

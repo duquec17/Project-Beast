@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://wssipiljqrmj"]
+
+[ext_resource type="Script" path="res://Scripts/Player/Bullets/web_platform.gd" id="1_jfd1p"]
+[ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="2_d6ykv"]
+[ext_resource type="PackedScene" uid="uid://dhehsr30y3bi" path="res://Scenes/Objects/World Objects/One Way platform.tscn" id="3_m5miv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lr6v1"]
+
+[node name="WebPlatform" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_jfd1p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lr6v1")
+
+[node name="OneWayPlatform" parent="." instance=ExtResource("3_m5miv")]
+position = Vector2(10000, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.140625, 0.140625)
+texture = ExtResource("2_d6ykv")
+
+[node name="detectFloor" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectFloor"]
+shape = SubResource("CircleShape2D_lr6v1")
+
+[node name="hitEnemy" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitEnemy"]
+shape = SubResource("CircleShape2D_lr6v1")
+
+[connection signal="area_entered" from="detectFloor" to="." method="_on_detect_floor_area_entered"]
+[connection signal="body_entered" from="detectFloor" to="." method="_on_detect_floor_body_entered"]
+
+[editable path="OneWayPlatform"]

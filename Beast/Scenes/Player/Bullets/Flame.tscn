@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://egua32kt6vib"]
+[gd_scene load_steps=5 format=3 uid="uid://egua32kt6vib"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Bullets/GravityBullet.gd" id="1_8sune"]
 [ext_resource type="Texture2D" uid="uid://cfwd2irxt226l" path="res://icon.svg" id="2_32k88"]
+
+[sub_resource type="Gradient" id="Gradient_e80aa"]
+offsets = PackedFloat32Array(0, 0.0504451, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.205117, 0.205117, 0.205117, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ogest"]
 size = Vector2(12, 10)
@@ -9,8 +13,10 @@ size = Vector2(12, 10)
 [node name="Flame" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
-gravity_scale = 0.5
+gravity_scale = 0.005
 script = ExtResource("1_8sune")
+speed = 100
+sizeRamp = SubResource("Gradient_e80aa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ogest")
@@ -21,6 +27,7 @@ texture = ExtResource("2_32k88")
 
 [node name="detectFloor" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detectFloor"]
 shape = SubResource("RectangleShape2D_ogest")

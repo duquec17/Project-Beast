@@ -4,31 +4,46 @@ extends CharacterBody2D
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
-@export var weapons: Array[Node]
+var weapons: Array[Node]
 var selectedWeapon = 0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 981
 
 @export var aim: Node2D
-@export var ammoDisp: TextureRect
-var ammo = 2
+
+
+@export var bulletDisp: TextureRect
+@export var percentDisp: ProgressBar
+
+
+@onready var miniCam: Camera2D = $"../CanvasLayer/SubViewportContainer/SubViewport/Camera2D2"
+@onready var miniMap: SubViewport = $"../CanvasLayer/SubViewportContainer/SubViewport"
+
+
+var ammo = 1
 var shotCooldown = 0
 #Editable Values
-var maxAmmo = 2
+var maxAmmo = 1
 var shotPower = 400
 var airControl = false
 var roundRotation = false
 
-
+func _ready() -> void:
+	for i in $"Weapon Storage".get_children():
+		weapons.append(i)
+	
+	miniMap.world_2d = get_tree().root.world_2d
+	$"../CanvasLayer".visible = true
 
 func _physics_process(delta):
 	
-	if Input.is_action_just_pressed("jump"):
-		findWeapons()
+	miniCam.global_position = global_position
 	
-	if Input.is_action_just_pressed("Debug"):
+	if Input.is_action_just_pressed("swapUp"):
 		switchWeapon(selectedWeapon + 1)
+	if Input.is_action_just_pressed("swapDown"):
+		switchWeapon(selectedWeapon - 1)
 	
 	if shotCooldown > 0: shotCooldown -= delta
 	# Add the gravity.
@@ -63,21 +78,36 @@ func _physics_process(delta):
 	ammo = weapons[selectedWeapon].ammo
 	move_and_slide()
 	#print(ammo)
-	ammoDisp.size.x = 128 * ammo
+	
+	$"../CanvasLayer/Control/Label".text = weapons[selectedWeapon].description
+	if weapons[selectedWeapon].ammoType == 0:
+		bulletDisp.size.x = 128 * ammo
+		percentDisp.show_percentage = false
+		percentDisp.value = 0
+	else:
+		bulletDisp.size.x = 0
+		percentDisp.show_percentage = true
+		percentDisp.value = float(ammo) / float(weapons[selectedWeapon].maxAmmo)
 
 func findWeapons():
 	weapons = $"Weapon Storage".get_children()
 	print(weapons)
 
 func switchWeapon(num):
-	while num >= len(weapons):
-		num -= len(weapons)
+	if num >= len(weapons):
+		num = 0
+	elif num < 0:
+		num = len(weapons) - 1
 	selectedWeapon = num
 
 func shoot(): #Shot Impulse Direction
 	velocity.x = sin(aim.rotation) * shotPower
 	velocity.y = cos(aim.rotation) * shotPower * -1
 
+func updateWeapons():
+	weapons.clear()
+	for i in $"Weapon Storage".get_children():
+		weapons.append(i)
 
 func _on_reload_collider_area_entered(area): #Reload
 	ammo = maxAmmo

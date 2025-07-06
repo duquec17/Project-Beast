@@ -3,6 +3,9 @@ extends Node2D
 @onready var player = get_parent().player
 @onready var aim = get_parent().aim
 @export var bullet: PackedScene
+@export var description: String
+
+@export var ammoType = 0 #This will be replced by the different ammunition visuals
 
 var auto = true
 
@@ -13,7 +16,7 @@ var maxAmmo = 100
 var shotPower = 200
 var shotDelay = .01
 
-var projSpeed = 300
+var projSpeed = 3
 var projLife = .5
 
 var rng = RandomNumberGenerator.new()

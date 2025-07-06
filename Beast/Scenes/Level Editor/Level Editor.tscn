@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg21111kigxep"]
+
+[ext_resource type="PackedScene" uid="uid://cduy2q4bc7xy" path="res://Scenes/Objects/Tilesets/ground.tscn" id="1_0rfii"]
+[ext_resource type="Script" path="res://Scenes/Level Editor/Level Editor Scripts/camera_control.gd" id="2_cd4r0"]
+
+[node name="LevelEditor" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 228.0
+offset_bottom = 191.0
+current_tab = 0
+
+[node name="Terrain" type="GridContainer" parent="CanvasLayer/Control/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Objects" type="GridContainer" parent="CanvasLayer/Control/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("level")]
+script = ExtResource("2_cd4r0")
+level = NodePath("../Level")
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Ground" parent="Level" instance=ExtResource("1_0rfii")]
