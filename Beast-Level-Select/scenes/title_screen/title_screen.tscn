@@ -29,9 +29,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Any Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Animal Select" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Press Any Button"
+text = "Animal Select"
 
 [node name="New Game" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -49,7 +49,7 @@ text = "Settings"
 layout_mode = 2
 text = "Exit"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Any Button" to="." method="_on_any_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Animal Select" to="." method="_on_any_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Config" to="." method="_on_config_pressed"]
