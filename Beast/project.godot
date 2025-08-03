@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="LG_Demo_Reel"
+run/main_scene="res://Scenes/Levels/Test_Level.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -64,3 +65,4 @@ swapDown={
 2d_physics/layer_3="Reload"
 2d_physics/layer_4="Hit Enemy"
 2d_physics/layer_5="Alt Ground"
+2d_physics/layer_6="Player Damaged"

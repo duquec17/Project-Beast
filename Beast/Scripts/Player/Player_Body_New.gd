@@ -26,8 +26,11 @@ var shotCooldown = 0
 #Editable Values
 var maxAmmo = 1
 var shotPower = 400
-var airControl = false
+var airControl = true
 var roundRotation = false
+
+var health = 3
+var iframes = 0
 
 func _ready() -> void:
 	for i in $"Weapon Storage".get_children():
@@ -37,6 +40,7 @@ func _ready() -> void:
 	$"../CanvasLayer".visible = true
 
 func _physics_process(delta):
+	iframes -= delta
 	
 	miniCam.global_position = global_position
 	
@@ -94,10 +98,10 @@ func findWeapons():
 	print(weapons)
 
 func switchWeapon(num):
-	if num >= len(weapons):
+	if num >= len(weapons) or num > health-1:
 		num = 0
 	elif num < 0:
-		num = len(weapons) - 1
+		num = health - 1
 	selectedWeapon = num
 
 func shoot(): #Shot Impulse Direction
@@ -113,3 +117,13 @@ func _on_reload_collider_area_entered(area): #Reload
 	ammo = maxAmmo
 	weapons[selectedWeapon].ammo = weapons[selectedWeapon].maxAmmo
 	area.queue_free()
+
+
+func _on_damage_collider_area_entered(area: Area2D) -> void:
+	if iframes <= 0:
+		iframes = 2
+		health -= 1
+		print(health)
+		switchWeapon(selectedWeapon)
+	if health == 0:
+		get_tree().reload_current_scene()

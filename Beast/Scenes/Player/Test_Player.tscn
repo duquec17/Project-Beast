@@ -71,6 +71,13 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body/Reload_Collider"]
 shape = SubResource("RectangleShape2D_e0ypq")
 
+[node name="Damage_Collider" type="Area2D" parent="Player_Body"]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Body/Damage_Collider"]
+shape = SubResource("RectangleShape2D_e0ypq")
+
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 zoom = Vector2(2, 2)
 script = ExtResource("2_ucdb3")
@@ -150,3 +157,4 @@ points = PackedVector2Array(-5, 245, 245, 245, 245, -5, -5, -5)
 closed = true
 
 [connection signal="area_entered" from="Player_Body/Reload_Collider" to="Player_Body" method="_on_reload_collider_area_entered"]
+[connection signal="area_entered" from="Player_Body/Damage_Collider" to="Player_Body" method="_on_damage_collider_area_entered"]
