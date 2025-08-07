@@ -176,6 +176,12 @@ rotation = -0.436188
 scale = Vector2(0.5, 0.15)
 texture = ExtResource("5_bymww")
 
+[node name="Checkpoint" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint"]
+
 [connection signal="area_entered" from="Dummy" to="Dummy" method="_on_area_entered"]
 [connection signal="area_entered" from="Dummy2" to="Dummy2" method="_on_area_entered"]
 [connection signal="area_entered" from="Dummy3" to="Dummy3" method="_on_area_entered"]
